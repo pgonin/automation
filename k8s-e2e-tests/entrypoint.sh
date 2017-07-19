@@ -54,7 +54,8 @@ run_tests() {
         --clean-start=true \
         --dump-logs-on-failure \
         --delete-namespace=true \
-        --ginkgo.trace=true"
+        --ginkgo.trace=true \
+        --ginkgo.noColor=y"
 
     cd $KUBE_ROOT
 
