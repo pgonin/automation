@@ -14,7 +14,7 @@
 
 import pytest
 import json
-
+import os
 
 @pytest.mark.master
 class TestKubernetesMaster(object):
@@ -51,7 +51,12 @@ class TestKubernetesMaster(object):
 
         # Check the number of nodes
         # TODO(graham): Load this from env
-        assert (len(nodes["items"]) == 2)
+
+        env_file = os.environ['ENVIRONMENT']
+        with open(env_file, 'r') as f:
+            env = json.load(f)
+
+        assert (len(nodes["items"]) == sum(1 for i in env["minions"] if i["role"] == "worker" ))
 
         # Check all nodes are marked as "Ready" in k8s
         for node in nodes["items"]:
